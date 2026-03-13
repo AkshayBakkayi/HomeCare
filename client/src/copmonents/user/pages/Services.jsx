@@ -1,130 +1,155 @@
-import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Modal, Button } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { motion } from "framer-motion";
-import AOS from "aos";
-import "aos/dist/aos.css";
+import { Container, Row, Col, Card } from "react-bootstrap";
+
+import {
+  FaUserNurse,
+  FaHeartbeat,
+  FaVials,
+  FaHospitalUser,
+  FaAmbulance
+} from "react-icons/fa";
+
+
+const iconMap = {
+  FaUserNurse,
+  FaHeartbeat,
+  FaVials,
+  FaHospitalUser,
+  FaAmbulance
+};
+
 
 const UserServices = () => {
 
   const [services, setServices] = useState([]);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
-
-    AOS.init({
-      duration: 1000,
-      once: true,
-    });
-
     fetchServices();
-
   }, []);
+
 
   const fetchServices = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/admin/service");
+
+      const res = await axios.get(
+        "http://localhost:8000/api/admin/service"
+      );
+
       setServices(res.data.data);
+
     } catch (error) {
-      console.error(error);
+      console.error("Error loading services:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleImageClick = (imageUrl) => {
-    setSelectedImage(imageUrl);
-    setShowModal(true);
-  };
 
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
+  if (loading) {
+    return (
+      <Container className="mt-5 text-center">
+        <h4>Loading services...</h4>
+      </Container>
+    );
+  }
 
-  const cardVariants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0 },
-  };
 
   return (
-    <Container className="mt-5">
+    <>
+      <style>{`
+        .service-card{
+          border:none;
+          border-radius:12px;
+          padding:25px;
+          transition:0.3s;
+          box-shadow:0 4px 15px rgba(0,0,0,0.08);
+        }
 
-      <h2 className="text-center mb-5">Our Services</h2>
+        .service-card:hover{
+          transform:translateY(-6px);
+          box-shadow:0 10px 25px rgba(0,0,0,0.15);
+        }
 
-      <Row>
+        .service-icon{
+          font-size:42px;
+          color:#0d6efd;
+          margin-bottom:15px;
+        }
 
-        {services.map((service, index) => (
+        .service-list{
+          list-style:none;
+          padding:0;
+          margin-top:10px;
+        }
 
-          <Col md={6} lg={4} key={service._id} className="mb-4">
+        .service-list li{
+          margin-bottom:6px;
+          color:#555;
+        }
 
-            <motion.div
-              className="item-card"
-              variants={cardVariants}
-              initial="hidden"
-              animate="visible"
-              transition={{ delay: index * 0.1 }}
-            >
+        .service-title{
+          font-weight:600;
+          margin-bottom:10px;
+        }
+      `}</style>
 
-              <div
-                className="item-image-container"
-                onClick={() =>
-                  handleImageClick(
-                    `http://localhost:8000/api/admin/uploads/${service.serviceImage}`
-                  )
-                }
-              >
-                <img
-                  src={`http://localhost:8000/api/admin/uploads/${service.serviceImage}`}
-                  alt={service.serviceName}
-                  className="item-image"
-                />
-              </div>
+      <Container className="mt-5">
 
-              <div className="item-details">
+        <h2 className="text-center mb-4">Our Services</h2>
 
-                <h3 className="item-name">{service.serviceName}</h3>
+        <Row>
 
-                <p className="item-description">{service.description}</p>
+          {services.length > 0 ? (
 
-                <div className="item-meta">
+            services.map(service => {
 
-                  <div>
-                    <span className="meta-label">Price</span>
-                    <span className="meta-value">
-                      ₹{service.price}
-                    </span>
-                  </div>
+              const Icon = iconMap[service.icon];
 
-                  <div>
-                    <span className="meta-label">Duration</span>
-                    <span className="meta-value">
-                      {service.duration}
-                    </span>
-                  </div>
+              return (
 
-                </div>
+                <Col md={4} key={service._id} className="mb-4">
 
-              </div>
+                  <Card className="service-card text-center">
 
-            </motion.div>
+                    {Icon && <Icon className="service-icon" />}
 
-          </Col>
+                    <h5 className="service-title">
+                      {service.serviceName}
+                    </h5>
 
-        ))}
+                    <ul className="service-list">
 
-      </Row>
+                      {(service.description || []).map((item, i) => (
+                        <li key={i}>{item}</li>
+                      ))}
 
-      <Modal show={showModal} onHide={handleCloseModal} centered size="lg">
-        <Modal.Body className="text-center">
-          {selectedImage && (
-            <img src={selectedImage} alt="" className="img-fluid" />
+                    </ul>
+
+                  </Card>
+
+                </Col>
+
+              );
+
+            })
+
+          ) : (
+
+            <Col>
+              <p className="text-center">
+                No services available
+              </p>
+            </Col>
+
           )}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={handleCloseModal}>Close</Button>
-        </Modal.Footer>
-      </Modal>
 
-    </Container>
+        </Row>
+
+      </Container>
+    </>
   );
 };
 

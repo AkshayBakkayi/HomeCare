@@ -9,97 +9,109 @@ const AdminServices = () => {
 
   const [serviceData, setServiceData] = useState({
     serviceName: "",
-    duration: "",
-    description: "",
+    icon: "",
+    description: ""
   });
 
   const [isEditMode, setIsEditMode] = useState(false);
   const [serviceId, setServiceId] = useState(null);
 
+
   useEffect(() => {
     fetchServices();
   }, []);
 
-  // GET SERVICES
+
   const fetchServices = async () => {
-    try {
-      const res = await axios.get("http://localhost:8000/api/admin/service");
-      setServices(res.data.data);
-    } catch (error) {
-      console.log(error);
-    }
+
+    const res = await axios.get("http://localhost:8000/api/admin/service");
+
+    setServices(res.data.data);
+
   };
 
-  // HANDLE INPUT
+
   const handleChange = (e) => {
+
     const { name, value } = e.target;
-    setServiceData({ ...serviceData, [name]: value });
+
+    setServiceData({
+      ...serviceData,
+      [name]: value
+    });
+
   };
 
-  // ADD OR UPDATE SERVICE
+
   const handleSubmit = async (e) => {
+
     e.preventDefault();
 
-    try {
+    const payload = {
+      ...serviceData,
+      description: serviceData.description.split("\n")
+    };
 
-      if (isEditMode) {
-        await axios.put(
-          `http://localhost:8000/api/admin/service/${serviceId}`,
-          serviceData
-        );
-      } else {
-        await axios.post(
-          "http://localhost:8000/api/admin/service",
-          serviceData
-        );
-      }
 
-      fetchServices();
+    if (isEditMode) {
 
-      setServiceData({
-        serviceName: "",
-        duration: "",
-        description: "",
-      });
+      await axios.put(
+        `http://localhost:8000/api/admin/service/${serviceId}`,
+        payload
+      );
 
-      setIsEditMode(false);
-      setServiceId(null);
+    } else {
 
-    } catch (error) {
-      console.log(error);
+      await axios.post(
+        "http://localhost:8000/api/admin/service",
+        payload
+      );
+
     }
+
+    fetchServices();
+
+    setServiceData({
+      serviceName: "",
+      icon: "",
+      description: ""
+    });
+
+    setIsEditMode(false);
+
   };
 
-  // EDIT SERVICE
+
   const handleEdit = (service) => {
+
     setServiceData({
       serviceName: service.serviceName,
-      duration: service.duration,
-      description: service.description,
+      icon: service.icon,
+      description: service.description.join("\n")
     });
 
     setServiceId(service._id);
+
     setIsEditMode(true);
+
   };
 
-  // DELETE SERVICE
+
   const handleDelete = async (id) => {
-    if (!window.confirm("Delete this service?")) return;
 
-    try {
-      await axios.delete(`http://localhost:8000/api/admin/service/${id}`);
-      fetchServices();
-    } catch (error) {
-      console.log(error);
-    }
+    await axios.delete(
+      `http://localhost:8000/api/admin/service/${id}`
+    );
+
+    fetchServices();
+
   };
+
 
   return (
     <Container className="mt-5">
 
-      <h2 className="mb-4">
-        {isEditMode ? "Edit Service" : "Add Service"}
-      </h2>
+      <h2>{isEditMode ? "Edit Service" : "Add Service"}</h2>
 
       <Form onSubmit={handleSubmit}>
 
@@ -107,40 +119,61 @@ const AdminServices = () => {
 
           <Col md={6}>
             <Form.Group>
-              <Form.Label>Service Name</Form.Label>
+
+              <Form.Label>Service Title</Form.Label>
+
               <Form.Control
                 name="serviceName"
                 value={serviceData.serviceName}
                 onChange={handleChange}
                 required
               />
+
             </Form.Group>
           </Col>
 
+
           <Col md={6}>
             <Form.Group>
-              <Form.Label>Duration</Form.Label>
-              <Form.Control
-                name="duration"
-                value={serviceData.duration}
+
+              <Form.Label>Icon</Form.Label>
+
+              <Form.Select
+                name="icon"
+                value={serviceData.icon}
                 onChange={handleChange}
                 required
-              />
+              >
+
+                <option value="">Select Icon</option>
+                <option value="FaUserNurse">Nursing</option>
+                <option value="FaHeartbeat">Physiotherapy</option>
+                <option value="FaVials">Lab</option>
+                <option value="FaHospitalUser">Patient Care</option>
+                <option value="FaAmbulance">Emergency</option>
+
+              </Form.Select>
+
             </Form.Group>
           </Col>
 
         </Row>
 
+
         <Form.Group>
-          <Form.Label>Description</Form.Label>
+
+          <Form.Label>Description (one per line)</Form.Label>
+
           <Form.Control
             as="textarea"
-            rows={3}
+            rows={4}
             name="description"
             value={serviceData.description}
             onChange={handleChange}
           />
+
         </Form.Group>
+
 
         <Button className="mt-3" type="submit">
           {isEditMode ? "Update Service" : "Add Service"}
@@ -148,56 +181,55 @@ const AdminServices = () => {
 
       </Form>
 
+
       <h3 className="mt-5">Service List</h3>
 
-      <Table striped bordered hover>
+      <Table bordered>
 
         <thead>
           <tr>
-            <th>Service Name</th>
-            <th>Duration</th>
+            <th>Service</th>
+            <th>Icon</th>
             <th>Description</th>
-            <th style={{ width: "120px" }}>Actions</th>
+            <th>Actions</th>
           </tr>
         </thead>
 
+
         <tbody>
 
-          {services.length > 0 ? (
-            services.map((service) => (
-              <tr key={service._id}>
-                <td>{service.serviceName}</td>
-                <td>{service.duration}</td>
-                <td>{service.description}</td>
+          {services.map((service) => (
 
-                <td>
-                  <Button
-                    variant="warning"
-                    size="sm"
-                    onClick={() => handleEdit(service)}
-                    className="me-2"
-                  >
-                    <MdEdit />
-                  </Button>
+            <tr key={service._id}>
 
-                  <Button
-                    variant="danger"
-                    size="sm"
-                    onClick={() => handleDelete(service._id)}
-                  >
-                    <MdDelete />
-                  </Button>
-                </td>
+              <td>{service.serviceName}</td>
 
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="4" className="text-center">
-                No services available
+              <td>{service.icon}</td>
+
+              <td>{service.description.join(", ")}</td>
+
+              <td>
+
+                <Button
+                  variant="warning"
+                  onClick={() => handleEdit(service)}
+                >
+                  <MdEdit />
+                </Button>
+
+                <Button
+                  variant="danger"
+                  className="ms-2"
+                  onClick={() => handleDelete(service._id)}
+                >
+                  <MdDelete />
+                </Button>
+
               </td>
+
             </tr>
-          )}
+
+          ))}
 
         </tbody>
 

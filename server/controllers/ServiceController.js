@@ -1,23 +1,16 @@
-import { Service } from "../models/Service.js";
+import { Service } from "../models/service.js";
 
 
 // CREATE SERVICE
 export const createService = async (req, res) => {
   try {
 
-    const { serviceName, description, price, duration } = req.body;
-    //const serviceImage = req.file ? req.file.filename : null;
-
-    // if (!serviceImage) {
-    //   return res.status(400).json({ message: "Service image required" });
-    // }
+    const { serviceName, icon, description } = req.body;
 
     const service = new Service({
       serviceName,
-      description,
-      price,
-      duration,
-      // serviceImage,
+      icon,
+      description
     });
 
     await service.save();
@@ -35,7 +28,6 @@ export const createService = async (req, res) => {
 };
 
 
-
 // GET SERVICES
 export const getServices = async (req, res) => {
   try {
@@ -51,7 +43,6 @@ export const getServices = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
 
 
 // GET SERVICE BY ID
@@ -75,27 +66,19 @@ export const getServiceById = async (req, res) => {
 };
 
 
-
 // UPDATE SERVICE
 export const updateService = async (req, res) => {
   try {
 
-    const { serviceName, description, price, duration } = req.body;
-
-    let updateData = {};
-
-    if (serviceName) updateData.serviceName = serviceName;
-    if (description) updateData.description = description;
-    if (price) updateData.price = price;
-    if (duration) updateData.duration = duration;
-
-    // if (req.file) {
-    //   updateData.serviceImage = req.file.filename;
-    // }
+    const { serviceName, icon, description } = req.body;
 
     const service = await Service.findByIdAndUpdate(
       req.params.id,
-      updateData,
+      {
+        serviceName,
+        icon,
+        description
+      },
       { new: true }
     );
 
@@ -113,7 +96,6 @@ export const updateService = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
 
 
 // DELETE SERVICE

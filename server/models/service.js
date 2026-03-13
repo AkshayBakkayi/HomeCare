@@ -8,26 +8,17 @@ const serviceSchema = new mongoose.Schema(
       trim: true,
     },
 
-    // serviceImage: {
-    //   type: String,
-    //   required: true,
-    // },
-
-    description: {
-      type: String,
-      trim: true,
-    },
-
-    price: {
-      type: Number,
-      required: true,
-      min: 0,
-    },
-
-    duration: {
+    icon: {
       type: String,
       required: true,
     },
+
+    description: [
+      {
+        type: String,
+        trim: true,
+      },
+    ],
 
     status: {
       type: String,
