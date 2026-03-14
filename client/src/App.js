@@ -10,7 +10,6 @@ import Team from './copmonents/user/pages/Team';
 import Contact from './copmonents/user/pages/Contact';
 
 import AdminLayout from './copmonents/admin/AdminLayout';
-import Appointments from './copmonents/admin/pages/Appointments';
 import Dashboard from './copmonents/admin/pages/Dashboard';
 import AdminServices from './copmonents/admin/pages/AdminServices';
 import AdminTeam from './copmonents/admin/pages/Team';
@@ -24,6 +23,8 @@ import GuestHome from './copmonents/guest/Home';
 import GuestContact from './copmonents/guest/Contact';
 import Register from './copmonents/guest/Register';
 import Login from './copmonents/guest/Login';
+import AdminUsers from './copmonents/admin/pages/Users';
+import AdminAppointments from './copmonents/admin/pages/Appointments';
 
 function App() {
   return (
@@ -55,10 +56,12 @@ function App() {
         {/* ----------Admin Layout--------------  */}
         <Route path='/admin' element={< AdminLayout/>}>
         <Route index element ={<Dashboard />} />
-          <Route path ='/admin/appointments' element ={<Appointments/>} />
+          <Route path ='/admin/appointments' element ={<AdminAppointments/>} />
           <Route path ='/admin/dashboard' element ={<Dashboard/>} />
           <Route path ='/admin/services' element ={<AdminServices/>} />
           <Route path ='/admin/team' element ={<AdminTeam/>} />
+          <Route path='/admin/users' element={<AdminUsers />} />
+
 
 
         </Route>

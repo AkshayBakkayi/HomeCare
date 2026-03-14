@@ -153,6 +153,11 @@ const GuestNavbar = () => {
                 Appointment
               </Nav.Link>
 
+              <Nav.Link as={NavLink} to="/admin/users" className="nav-link-custom">
+                <CalendarCheck size={18} />
+                Users
+              </Nav.Link>
+
             </Nav>
           </Navbar.Collapse>
         </Container>

@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 
 import userRouter from "./routers/userRouter.js";
 import adminRoutes from "./routers/adminRouter.js";
+import appointmentRouter from "./routers/appointmentRouter.js";
 
 const app = express();
 dotenv.config();
@@ -21,6 +22,7 @@ app.use("/uploads", express.static("uploads"));
 // ROUTES
 app.use("/api/user", userRouter);
 app.use("/api/admin", adminRoutes);
+app.use("/api/admin", appointmentRouter);
 
 // PORT
 const PORT = process.env.PORT || 2000;

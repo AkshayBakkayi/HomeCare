@@ -1,31 +1,46 @@
+// models/Appointment.js
 import mongoose from "mongoose";
 
 const appointmentSchema = new mongoose.Schema(
   {
-    user: {
+    patientName: { type: String, required: true },
+    phone: { type: String, required: true },
+    address: String,
+
+    serviceId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true
+      ref: "Service"
     },
-    service: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Service",
-      required: true
+
+    appointmentDate: Date,
+    timeSlot: String,
+
+    source: {
+      type: String,
+      enum: ["whatsapp", "call"],
+      default: "whatsapp"
     },
-    assignedTo: {
+
+    teamId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Team"
-    },
-    date: { type: Date, required: true },
-    timeSlot: { type: String, required: true },
+      },
 
     status: {
       type: String,
-      enum: ["pending", "approved", "assigned", "completed", "cancelled"],
+      enum: [
+        "pending",
+        "confirmed",
+        "assigned",
+        "completed",
+        "cancelled"
+      ],
       default: "pending"
-    }
+    },
+
+    notes: String
   },
   { timestamps: true }
 );
 
-export default mongoose.model("Appointment", appointmentSchema);
+export const Appointment = mongoose.model("Appointment", appointmentSchema);
