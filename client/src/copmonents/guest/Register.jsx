@@ -62,7 +62,7 @@ const Register = () => {
   };
 
   return (
-    <Container className="d-flex justify-content-center align-items-center vh-100">
+    <Container className="d-flex justify-content-center align-items-center vh-100 top-margin 10px" >
       <Row className="w-100">
         <Col lg={5} md={7} sm={10} className="mx-auto">
 

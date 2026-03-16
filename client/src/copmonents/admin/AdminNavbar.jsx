@@ -110,7 +110,15 @@ const GuestNavbar = () => {
         `}
       </style>
 
-      <Navbar expand="lg" className="custom-navbar" collapseOnSelect>
+      <Navbar expand="lg"
+        className="custom-navbar"
+        collapseOnSelect
+        style={{
+          position: "fixed",
+          top: 0,
+          width: "100%",
+          zIndex: 1000
+        }}>
         <Container>
 
           {/* Brand */}

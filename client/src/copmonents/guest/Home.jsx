@@ -189,9 +189,9 @@ const GuestHome = () => {
             variant="warning"
             size="lg"
             className="mt-4"
-            onClick={() => navigate("/services")}
+            onClick={() => navigate("/team")}
           >
-            Explore Services
+            Book Now
           </Button>
 
         </Container>

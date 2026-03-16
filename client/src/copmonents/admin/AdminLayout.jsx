@@ -1,18 +1,20 @@
 import React from "react";
-import {Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import AdminNavbar from "./AdminNavbar";
 import AdminFooter from "./AdminFooter";
 
 const AdminLayout = () => {
-   const [authorized, setAuthorized] = useState(null); // null = loading, false = not allowed, true = allowed
+  const [authorized, setAuthorized] = useState(null);
 
   useEffect(() => {
     const userString = localStorage.getItem("user");
+
     if (userString) {
       try {
         const user = JSON.parse(userString);
-        if (user?.role === 'admin') {
+
+        if (user?.role === "admin") {
           setAuthorized(true);
         } else {
           setAuthorized(false);
@@ -26,24 +28,35 @@ const AdminLayout = () => {
     }
   }, []);
 
-  if (authorized === null) {
-    return <div>Loading...</div>;
-  }
+  if (authorized === null) return <div>Loading...</div>;
 
-  if (authorized === false) {
-    return <Navigate to="/login" replace />;
-  }
+  if (authorized === false) return <Navigate to="/login" replace />;
 
   return (
-    <>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100vh"
+      }}
+    >
+      {/* Fixed Navbar */}
       <AdminNavbar />
 
-      <div style={{ padding: "30px" }}>
+      {/* Scrollable Content */}
+      <main
+        style={{
+          flex: 1,
+          marginTop: "80px",
+          padding: "30px"
+        }}
+      >
         <Outlet />
-      </div>
+      </main>
 
+      {/* Footer */}
       <AdminFooter />
-    </>
+    </div>
   );
 };
 

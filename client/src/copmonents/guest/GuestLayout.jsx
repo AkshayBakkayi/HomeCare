@@ -1,35 +1,35 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-import Header from './Header';
-import Footer from './Footer';
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Header from "./Header";
+import Footer from "./Footer";
 
 const GuestLayout = () => {
-    return (
-        <div
-            className="user-layout"
-            style={{
-                display: 'flex',
-                flexDirection: 'column',
-                minHeight: '100vh'
-            }}
-        >
-            {/* Header */}
-            <Header />
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100vh"
+      }}
+    >
+      {/* Fixed Header */}
+      <Header />
 
-            {/* Main Content */}
-            <main
-                style={{
-                    flex: 1,
-                    marginTop: '10px' // keep this if header is fixed
-                }}
-            >
-                <Outlet />
-            </main>
+      {/* Scrollable Body */}
+      <main
+        style={{
+          flex: 1,
+          marginTop: "80px",
+          padding: "20px"
+        }}
+      >
+        <Outlet />
+      </main>
 
-            {/* Footer */}
-            <Footer />
-        </div>
-    );
+      {/* Footer */}
+      <Footer />
+    </div>
+  );
 };
 
 export default GuestLayout;
