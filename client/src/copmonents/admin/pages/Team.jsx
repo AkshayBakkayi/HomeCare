@@ -32,7 +32,7 @@ const Team = () => {
   // FETCH TEAM MEMBERS
   const fetchTeams = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/admin/team");
+      const res = await axios.get("https://homecare-yq1l.onrender.com/api/admin/team");
       setTeams(res.data.data);
     } catch (error) {
       console.log(error);
@@ -64,12 +64,12 @@ const Team = () => {
 
       if (isEditMode) {
         await axios.put(
-          `http://localhost:8000/api/admin/team/${teamId}`,
+          `https://homecare-yq1l.onrender.com/api/admin/team/${teamId}`,
           formData
         );
       } else {
         await axios.post(
-          "http://localhost:8000/api/admin/team",
+          "https://homecare-yq1l.onrender.com/api/admin/team",
           formData
         );
       }
@@ -111,7 +111,7 @@ const Team = () => {
     if (!window.confirm("Delete this team member?")) return;
 
     try {
-      await axios.delete(`http://localhost:8000/api/admin/team/${id}`);
+      await axios.delete(`https://homecare-yq1l.onrender.com/api/admin/team/${id}`);
       fetchTeams();
     } catch (error) {
       console.log(error);
@@ -226,7 +226,7 @@ const Team = () => {
                 <td>
                   {team.photo && (
                     <img
-                      src={`http://localhost:8000/uploads/${team.photo}`}
+                      src={`https://homecare-yq1l.onrender.com/uploads/${team.photo}`}
                       width="50"
                       alt={team.name}
                     />

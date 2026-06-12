@@ -24,7 +24,7 @@ const AdminServices = () => {
 
   const fetchServices = async () => {
 
-    const res = await axios.get("http://localhost:8000/api/admin/service");
+    const res = await axios.get("https://homecare-yq1l.onrender.com/api/admin/service");
 
     setServices(res.data.data);
 
@@ -56,14 +56,14 @@ const AdminServices = () => {
     if (isEditMode) {
 
       await axios.put(
-        `http://localhost:8000/api/admin/service/${serviceId}`,
+        `https://homecare-yq1l.onrender.com/api/admin/service/${serviceId}`,
         payload
       );
 
     } else {
 
       await axios.post(
-        "http://localhost:8000/api/admin/service",
+        "https://homecare-yq1l.onrender.com/api/admin/service",
         payload
       );
 
@@ -100,7 +100,7 @@ const AdminServices = () => {
   const handleDelete = async (id) => {
 
     await axios.delete(
-      `http://localhost:8000/api/admin/service/${id}`
+      `https://homecare-yq1l.onrender.com/api/admin/service/${id}`
     );
 
     fetchServices();

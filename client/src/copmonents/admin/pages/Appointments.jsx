@@ -33,7 +33,7 @@ const AdminAppointments = () => {
   const fetchAppointments = async () => {
 
     const res = await axios.get(
-      "http://localhost:8000/api/admin/appointment"
+      "https://homecare-yq1l.onrender.com/api/admin/appointment"
     );
 
     setAppointments(res.data.data);
@@ -44,7 +44,7 @@ const AdminAppointments = () => {
   const fetchServices = async () => {
 
     const res = await axios.get(
-      "http://localhost:8000/api/admin/service"
+      "https://homecare-yq1l.onrender.com/api/admin/service"
     );
 
     setServices(res.data.data);
@@ -55,7 +55,7 @@ const AdminAppointments = () => {
   const fetchTeams = async () => {
 
     const res = await axios.get(
-      "http://localhost:8000/api/admin/team"
+      "https://homecare-yq1l.onrender.com/api/admin/team"
     );
 
     setTeams(res.data.data);
@@ -82,14 +82,14 @@ const AdminAppointments = () => {
     if (isEditMode) {
 
       await axios.put(
-        `http://localhost:8000/api/admin/appointment/${appointmentId}`,
+        `https://homecare-yq1l.onrender.com/api/admin/appointment/${appointmentId}`,
         formData
       );
 
     } else {
 
       await axios.post(
-        "http://localhost:8000/api/admin/appointment",
+        "https://homecare-yq1l.onrender.com/api/admin/appointment",
         formData
       );
 
@@ -133,7 +133,7 @@ const AdminAppointments = () => {
     if (!window.confirm("Delete appointment?")) return;
 
     await axios.delete(
-      `http://localhost:8000/api/admin/appointment/${id}`
+      `https://homecare-yq1l.onrender.com/api/admin/appointment/${id}`
     );
 
     fetchAppointments();

@@ -21,7 +21,7 @@ const UserTeam = () => {
 
   const fetchTeams = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/admin/team");
+      const res = await axios.get("https://homecare-yq1l.onrender.com/api/admin/team");
       setTeams(res.data.data);
     } catch (error) {
       console.error(error);
@@ -65,13 +65,13 @@ const UserTeam = () => {
                   className="team-img-wrapper"
                   onClick={() =>
                     handleImageClick(
-                      `http://localhost:8000/uploads/${team.photo}`
+                      `https://homecare-yq1l.onrender.com/uploads/${team.photo}`
                     )
                   }
                 >
                   <Card.Img
                     variant="top"
-                    src={`http://localhost:8000/uploads/${team.photo}`}
+                    src={`https://homecare-yq1l.onrender.com/uploads/${team.photo}`}
                     alt={team.name}
                     className="team-img"
                   />
