@@ -65,13 +65,13 @@ const GuestTeam = () => {
                   className="team-img-wrapper"
                   onClick={() =>
                     handleImageClick(
-                      `http://localhost:8000/uploads/${team.photo}`
+                      `https://homecare-yq1l.onrender.com/uploads/${team.photo}`
                     )
                   }
                 >
                   <Card.Img
                     variant="top"
-                    src={`http://localhost:8000/uploads/${team.photo}`}
+                    src={`https://homecare-yq1l.onrender.com/uploads/${team.photo}`}
                     alt={team.name}
                     className="team-img"
                   />
