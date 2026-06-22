@@ -1,14 +1,11 @@
 import React from "react";
-import { Container, Nav, Navbar, Button } from "react-bootstrap";
+import { Container, Nav, Navbar } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import {
   House,
   Grid,
   CalendarCheck,
-  People,
-  Envelope,
-  PersonPlus,
-  BoxArrowInRight
+  People
 } from "react-bootstrap-icons";
 
 const GuestNavbar = () => {

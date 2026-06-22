@@ -6,9 +6,7 @@ import {
   Grid,
   CalendarCheck,
   People,
-  Envelope,
-  PersonPlus,
-  BoxArrowInRight
+  Envelope
 } from "react-bootstrap-icons";
 
 const UserNavbar = () => {
