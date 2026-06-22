@@ -37,7 +37,7 @@ const Register = () => {
     try {
 
       const res = await axios.post(
-        "http://localhost:8000/api/user/register",
+        "https://homecare-yq1l.onrender.com/api/user/register",
         {
           name: formData.name,
           mobile: formData.mobile,

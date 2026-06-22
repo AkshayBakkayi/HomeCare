@@ -27,19 +27,19 @@ const Dashboard = () => {
     try {
 
       const services = await axios.get(
-        "http://localhost:8000/api/admin/service"
+        "https://homecare-yq1l.onrender.com/api/admin/service"
       );
 
       const appointments = await axios.get(
-        "http://localhost:8000/api/admin/appointment"
+        "https://homecare-yq1l.onrender.com/api/admin/appointment"
       );
 
       const teams = await axios.get(
-        "http://localhost:8000/api/admin/team"
+        "https://homecare-yq1l.onrender.com/api/admin/team"
       );
 
       const users = await axios.get(
-        "http://localhost:8000/api/admin/users"
+        "https://homecare-yq1l.onrender.com/api/admin/users"
       );
 
       setStats({

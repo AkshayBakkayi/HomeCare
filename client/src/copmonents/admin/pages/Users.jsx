@@ -16,7 +16,7 @@ const AdminUsers = () => {
     try {
 
       const res = await axios.get(
-        "http://localhost:8000/api/admin/users"
+        "https://homecare-yq1l.onrender.com/api/admin/users"
       );
 
       setUsers(res.data.data);

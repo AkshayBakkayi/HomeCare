@@ -35,7 +35,7 @@ const GuestServices = () => {
     try {
 
       const res = await axios.get(
-        "http://localhost:8000/api/admin/service"
+        "https://homecare-yq1l.onrender.com/api/admin/service"
       );
 
       setServices(res.data.data);
