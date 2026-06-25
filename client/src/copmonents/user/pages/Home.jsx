@@ -189,7 +189,7 @@ const GuestHome = () => {
             variant="warning"
             size="lg"
             className="mt-4"
-            onClick={() => navigate("/services")}
+            onClick={() => navigate("/user/services")}
           >
             Explore Services
           </Button>
